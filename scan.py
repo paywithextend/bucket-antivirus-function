@@ -12,10 +12,13 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+#
+# Modifications made by Extend Enterprises, Inc.
 
 import copy
 import json
 import os
+import time
 from urllib.parse import unquote_plus
 from distutils.util import strtobool
 
@@ -179,12 +182,17 @@ def sns_scan_results(
     ):
         return
     message = {
-        "bucket": s3_object.bucket_name,
-        "key": s3_object.key,
-        "version": s3_object.version_id,
-        AV_SIGNATURE_METADATA: scan_signature,
-        AV_STATUS_METADATA: scan_result,
-        AV_TIMESTAMP_METADATA: get_timestamp(),
+        "type": "antivirusNotification",
+        "version": "1.0.0",
+        "time": int(time.time() * 1000),
+        "payload": {
+            "bucket": s3_object.bucket_name,
+            "key": s3_object.key,
+            "version": s3_object.version_id,
+            AV_SIGNATURE_METADATA: scan_signature,
+            AV_STATUS_METADATA: scan_result,
+            AV_TIMESTAMP_METADATA: get_timestamp(),
+        }
     }
     sns_client.publish(
         TargetArn=sns_arn,
