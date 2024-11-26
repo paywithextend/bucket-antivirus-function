@@ -32,6 +32,7 @@ RUN : \
         less \
         libtool-ltdl \
         binutils \
+        libltdl7 \
     # && yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm \
     && pip3 install -r /opt/app/requirements.txt \
     && yum clean all \
