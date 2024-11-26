@@ -13,9 +13,14 @@
 # limitations under the License.
 
 AMZ_LINUX_VERSION:=2
+ECR_REPO_NAME = bucket-antivirus-function
+BUILD_TAG     = local-test
+ENVIRONMENT	  ?= stage### stage | prod
+AWS_PROFILE=extend-mfa
+SSM_LAYER_URI := $(shell aws lambda get-layer-version-by-arn --arn arn:aws:lambda:us-east-1:177933569100:layer:AWS-Parameters-and-Secrets-Lambda-Extension-Arm64:2 --query 'Content.Location' --output text --profile $(AWS_PROFILE))
+
 current_dir := $(shell pwd)
 container_dir := /opt/app
-circleci := ${CIRCLECI}
 
 .PHONY: help
 help:  ## Print the help documentation
@@ -64,3 +69,12 @@ scan: ./build/lambda.zip ## Run scan function locally
 .PHONY: update
 update: ./build/lambda.zip ## Run update function locally
 	scripts/run-update-lambda
+
+build-for-testing:
+	docker build \
+	  --no-cache \
+		--build-arg PARAMETERS_SECRETS_EXTENSION_LOG_LEVEL='DEBUG' \
+		-t $(ECR_REPO_NAME):$(BUILD_TAG) .
+
+test-run: build-for-testing
+	docker run -p 9000:8080 --env AWS_PROFILE=$(AWS_PROFILE) -v $(HOME)/.aws:/root/.aws $(ECR_REPO_NAME):$(ENVIRONMENT)
