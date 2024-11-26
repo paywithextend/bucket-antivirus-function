@@ -32,7 +32,6 @@ RUN : \
         less \
         libtool-ltdl \
         binutils \
-        libltdl7 \
     # && yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm \
     && pip3 install -r /opt/app/requirements.txt \
     && yum clean all \
@@ -55,7 +54,8 @@ RUN yumdownloader -x \*i686 --archlist=x86_64 \
   gnutls \
   libtasn1 \
   lib64nettle \
-  nettle 
+  nettle \
+  libltdl7
 
 RUN rpm2cpio clamav-0*.rpm | cpio -idmv
 RUN rpm2cpio clamav-lib*.rpm | cpio -idmv
