@@ -48,6 +48,7 @@ RUN yumdownloader -x \*i686 --archlist=x86_64 \
   elfutils-libs \
   json-c \
   lz4 \
+  libcurl \
   pcre \
   systemd-libs \
   libprelude \
@@ -68,6 +69,7 @@ RUN rpm2cpio clamd-0*.rpm | cpio -idmv
 RUN rpm2cpio elfutils-libs*.rpm | cpio -idmv
 RUN rpm2cpio json-c*.rpm | cpio -idmv
 RUN rpm2cpio lz4*.rpm | cpio -idmv
+RUN rpm2cpio libcurl*.rpm | cpio -idmv
 RUN rpm2cpio pcre*.rpm | cpio -idmv
 RUN rpm2cpio systemd-libs*.rpm | cpio -idmv
 RUN rpm2cpio gnutls* | cpio -idmv
