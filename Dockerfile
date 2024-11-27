@@ -49,7 +49,6 @@ RUN yumdownloader -x \*i686 --archlist=x86_64 \
   json-c \
   lz4 \
   pcre \
-  pcre2 \
   systemd-libs \
   libprelude \
   gnutls \
