@@ -49,6 +49,8 @@ RUN yumdownloader -x \*i686 --archlist=x86_64 \
   json-c \
   lz4 \
   libcurl \
+  libnghttp2 \
+  libidn2 \
   pcre \
   systemd-libs \
   libprelude \
@@ -70,6 +72,8 @@ RUN rpm2cpio elfutils-libs*.rpm | cpio -idmv
 RUN rpm2cpio json-c*.rpm | cpio -idmv
 RUN rpm2cpio lz4*.rpm | cpio -idmv
 RUN rpm2cpio libcurl*.rpm | cpio -idmv
+RUN rpm2cpio libnghttp2*.rpm | cpio -idmv
+RUN rpm2cpio libidn2*.rpm | cpio -idmv
 RUN rpm2cpio pcre*.rpm | cpio -idmv
 RUN rpm2cpio systemd-libs*.rpm | cpio -idmv
 RUN rpm2cpio gnutls* | cpio -idmv
